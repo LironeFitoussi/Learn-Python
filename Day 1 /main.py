@@ -23,7 +23,9 @@ print("Day 1 - String Manipulation")
 
 # 2. Outer double quotes changed to single quotes.
 # print("String Concatenation is done with the "+" sign.")
-print('String Concatenation is done with the "+" sign.')
+print('String Concatenation is done with the "+" sign.') 
+# print('e.g. print("Hello " + "world")')
+
 
 # 3. Extra indentation removed
 #   print('e.g. print("Hello " + "world")')
@@ -38,4 +40,5 @@ print("New lines can be created with a backslash and n.")
 # Don't put anything inside the input() function!
 # Write your code below this line 👇
 
+print("Write a name:")
 print(len(input()))
