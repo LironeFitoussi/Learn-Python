@@ -28,6 +28,9 @@ operations = {
 
 
 def calculator():
+    """
+    A simple calculator that takes two numbers and an operation and returns the result.
+    """
     print(art.logo)
     should_accumulate = True
     num1 = float(input("What is the first number?: "))
