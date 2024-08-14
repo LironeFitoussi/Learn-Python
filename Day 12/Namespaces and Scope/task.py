@@ -26,5 +26,5 @@ def game():
         print(player_health)
 
 
-drink_potion()  # This will return an error because potion_strength is not defined outside the function.
+# drink_potion()  # This will return an error because potion_strength is not defined outside the function.
 print(player_health)
