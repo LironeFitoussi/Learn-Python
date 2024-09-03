@@ -15,5 +15,9 @@ label = tk.Label(text="I am a label", font=("Arial", 24, "bold"))
 # label.pack(expand=True)
 label.pack()
 
+label["text"] = "New Text"
+label.config(text="New Text")
 
+button = tk.Button(text="Click Me")
+button.pack()
 window.mainloop()

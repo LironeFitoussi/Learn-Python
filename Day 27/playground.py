@@ -17,3 +17,20 @@ def calculate(n, **kwargs):
 
 
 calculate(2, add=3, multiply=5)  # 25
+
+
+class Car:
+    def __init__(self, **kwargs):
+        # self.make = kwargs["make"]
+        # self.model = kwargs["model"]
+
+        # Ensure that the key exists in the dictionary
+        self.make = kwargs.get("make")
+        self.model = kwargs.get("model")
+        self.color = kwargs.get("color")
+        self.seats = kwargs.get("seats")
+
+
+my_car = Car(make="Chevrolet", model="Spark")
+
+print(my_car.__dict__)
