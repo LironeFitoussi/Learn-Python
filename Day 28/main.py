@@ -10,37 +10,62 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+reps = 0
+timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- # 
 def reset_timer():
-    pass
-
+    window.after_cancel(timer)
+    canvas.itemconfig(timer_text, text="00:00")
+    title_label.config(text="Timer")
+    checkmark_label.config(text="")
+    global reps
+    reps = 0
+    
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
-    count_down(5)
+    global reps
+    
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
+
+    reps += 1
+
+    if reps % 8 == 0:
+        count_down(long_break_sec)
+        header_label.config(text="Long Break", fg=RED)
+    elif reps % 2 == 0:
+        count_down(short_break_sec)
+        header_label.config(text="Short Break", fg=PINK)
+    else:
+        count_down(work_sec)
+        header_label.config(text="Work", fg=GREEN)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count):
-    # print("Count: ", count)
-    
     count_min = math.floor(count / 60)
-    if count_min < 10:
-        count_min = f"0{count_min}"
-        
     count_sec = count % 60
     if count_sec < 10:
         count_sec = f"0{count_sec}"
     
     canvas.itemconfig(timer_text, text=f"{count_min}:{count_sec}")
+    
     if count > 0:
-        window.after(1000, count_down, count - 1)
-        
+        timer = window.after(1000, count_down, count - 1)
+    else:
+        if reps % 2 != 0:  # Only add checkmark after a work session
+            marks = ""
+            work_sessions = math.floor(reps / 2)
+            for _ in range(work_sessions):
+                marks += "✔"
+            checkmark_label.config(text=marks)
+        start_timer()
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Pomodoro")
 window.config(padx=100, pady=50, bg=YELLOW)
-
 
 # Canvas Setup
 canvas = Canvas(width=200, height=224, bg=YELLOW, highlightthickness=0)
@@ -58,11 +83,11 @@ start_button = Button(text="Start", bg=YELLOW, highlightthickness=0, highlightba
 start_button.grid(column=0, row=2)
 
 # Reset Button Setup
-reset_button = Button(text="Reset", bg=YELLOW, highlightthickness=0, highlightbackground=YELLOW)
+reset_button = Button(text="Reset", bg=YELLOW, highlightthickness=0, highlightbackground=YELLOW, command=reset_timer)
 reset_button.grid(column=2, row=2)
 
 # Checkmark Label Setup
-checkmark_label = Label(text="✔", fg=GREEN, bg=YELLOW)
+checkmark_label = Label(text="", fg=GREEN, bg=YELLOW)
 checkmark_label.grid(column=1, row=3)
 
 window.mainloop()
